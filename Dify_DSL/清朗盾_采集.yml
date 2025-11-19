@@ -1,0 +1,556 @@
+app:
+  description: 采集网页数据。
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: workflow
+  name: 清朗盾_采集
+  use_icon_as_answer_icon: false
+dependencies: []
+kind: app
+version: 0.4.0
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: start
+        targetType: code
+      id: 1758377890849-source-1760507258357-target
+      selected: false
+      source: '1758377890849'
+      sourceHandle: source
+      target: '1760507258357'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: code
+        targetType: if-else
+      id: 1760507258357-source-1758430456739-target
+      selected: false
+      source: '1760507258357'
+      sourceHandle: source
+      target: '1758430456739'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: if-else
+        targetType: end
+      id: 1758430456739-false-1758731555915-target
+      selected: false
+      source: '1758430456739'
+      sourceHandle: 'false'
+      target: '1758731555915'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: variable-aggregator
+        targetType: end
+      id: 1760521493700-source-1758495090004-target
+      source: '1760521493700'
+      sourceHandle: source
+      target: '1758495090004'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: if-else
+        targetType: tool
+      id: 1758430456739-5d1f01f2-0f96-46a6-9fa2-b3f5bdc93769-1761280133897-target
+      source: '1758430456739'
+      sourceHandle: 5d1f01f2-0f96-46a6-9fa2-b3f5bdc93769
+      target: '1761280133897'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: tool
+        targetType: variable-aggregator
+      id: 1761280133897-source-1760521493700-target
+      source: '1761280133897'
+      sourceHandle: source
+      target: '1760521493700'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: if-else
+        targetType: tool
+      id: 1758430456739-5a4e19dd-04fc-40aa-b83f-324d8291a607-1761280174158-target
+      source: '1758430456739'
+      sourceHandle: 5a4e19dd-04fc-40aa-b83f-324d8291a607
+      target: '1761280174158'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: tool
+        targetType: variable-aggregator
+      id: 1761280174158-source-1760521493700-target
+      source: '1761280174158'
+      sourceHandle: source
+      target: '1760521493700'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: 开始
+        type: start
+        variables:
+        - default: 链接
+          label: action
+          max_length: 8
+          options:
+          - 监测
+          - 链接
+          - 文本
+          - 视频
+          - 图文
+          required: true
+          type: text-input
+          variable: action
+        - label: url
+          max_length: 2000
+          options: []
+          required: true
+          type: paragraph
+          variable: url
+        - allowed_file_extensions: []
+          allowed_file_types:
+          - image
+          allowed_file_upload_methods:
+          - local_file
+          - remote_url
+          default: ''
+          hint: ''
+          label: screenshot
+          max_length: 4000000
+          options: []
+          placeholder: ''
+          required: false
+          type: paragraph
+          variable: screenshot
+        - default: ''
+          hint: ''
+          label: webpage
+          max_length: 100000
+          options: []
+          placeholder: ''
+          required: false
+          type: paragraph
+          variable: webpage
+      height: 165
+      id: '1758377890849'
+      position:
+        x: 30
+        y: 501.5
+      positionAbsolute:
+        x: 30
+        y: 501.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 241
+    - data:
+        cases:
+        - case_id: 'true'
+          conditions:
+          - comparison_operator: is
+            id: 76306f2e-56b9-41f5-a7d2-13642e7bcb24
+            value: 监测
+            varType: string
+            variable_selector:
+            - '1758377890849'
+            - action
+          id: 'true'
+          logical_operator: and
+        - case_id: 5d1f01f2-0f96-46a6-9fa2-b3f5bdc93769
+          conditions:
+          - comparison_operator: is
+            id: 78fe0ace-aeac-427e-9cee-563d9f9cd077
+            value: 链接
+            varType: string
+            variable_selector:
+            - '1758377890849'
+            - action
+          - comparison_operator: start with
+            id: c8c51e68-5480-4a26-a342-e2abfb1384a2
+            value: http
+            varType: string
+            variable_selector:
+            - '1758377890849'
+            - url
+          id: 5d1f01f2-0f96-46a6-9fa2-b3f5bdc93769
+          logical_operator: and
+        - case_id: 5a4e19dd-04fc-40aa-b83f-324d8291a607
+          conditions:
+          - comparison_operator: is
+            id: 76add040-3d6a-4e6f-8df6-00e10ff8245e
+            value: 网页
+            varType: string
+            variable_selector:
+            - '1758377890849'
+            - action
+          id: 5a4e19dd-04fc-40aa-b83f-324d8291a607
+          logical_operator: and
+        desc: ''
+        selected: false
+        title: 动作分支
+        type: if-else
+      height: 245
+      id: '1758430456739'
+      position:
+        x: 329.5714285714286
+        y: 501.5
+      positionAbsolute:
+        x: 329.5714285714286
+        y: 501.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 241
+    - data:
+        desc: ''
+        outputs:
+        - value_selector:
+          - '1760521493700'
+          - output
+          value_type: array[object]
+          variable: result
+        selected: false
+        title: 结束
+        type: end
+      height: 87
+      id: '1758495090004'
+      position:
+        x: 1199.8571428571431
+        y: 501.5
+      positionAbsolute:
+        x: 1199.8571428571431
+        y: 501.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 241
+    - data:
+        is_team_authorization: true
+        paramSchemas:
+        - auto_generate: null
+          default: null
+          form: llm
+          human_description:
+            en_US: ''
+            ja_JP: ''
+            pt_BR: ''
+            zh_Hans: ''
+          label:
+            en_US: url
+            ja_JP: url
+            pt_BR: url
+            zh_Hans: url
+          llm_description: ''
+          max: null
+          min: null
+          name: url
+          options: []
+          placeholder: null
+          precision: null
+          required: true
+          scope: null
+          template: null
+          type: string
+        params:
+          url: ''
+        provider_id: ihi_mcp
+        provider_name: IHI_mcp
+        provider_type: mcp
+        selected: false
+        title: browser_get_struct_document_with_url
+        tool_configurations: {}
+        tool_description: '获取指定URL的结构化文档内容
+
+          :param url: 要获取内容的URL
+
+          :return: 包含结构化文档内容的字典'
+        tool_label: browser_get_struct_document_with_url
+        tool_name: browser_get_struct_document_with_url
+        tool_node_version: '2'
+        tool_parameters:
+          url:
+            type: mixed
+            value: '{{#1758377890849.url#}}'
+        type: tool
+      height: 83
+      id: '1761280133897'
+      position:
+        x: 599.2857142857141
+        y: 501.5
+      positionAbsolute:
+        x: 599.2857142857141
+        y: 501.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 241
+    - data:
+        outputs: []
+        selected: false
+        title: 抓取失败-结束-空
+        type: end
+      height: 51
+      id: '1758731555915'
+      position:
+        x: 904.5714285714282
+        y: 702.0714285714287
+      positionAbsolute:
+        x: 904.5714285714282
+        y: 702.0714285714287
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 241
+    - data:
+        code: "import time\ndef main() -> dict:\n    # 获取当前日期时间\n    current_time\
+          \ = int(time.time() + 8 * 60 * 60)  # 东八区时间\n\n    # 获取星期几\n    weekdays\
+          \ = ['周日', '周一', '周二', '周三', '周四', '周五', '周六']\n    weekday_number = int(time.strftime('%w',\
+          \ time.gmtime(current_time)))  # 返回 0-6，对应周日到周六\n\n    # 跨平台方式：先获取数值再转为字符串（避免系统差异）\n\
+          \    year = int(time.strftime('%Y', time.gmtime(current_time)))\n    month\
+          \ = int(time.strftime('%m', time.gmtime(current_time)))  # 月份（1-12，无前导零）\n\
+          \    day = int(time.strftime('%d', time.gmtime(current_time)))      # 日期（1-31，无前导零）\n\
+          \n    # 格式化日期字符串\n    formatted_date = f'{year}年{month}月{day}日 {weekdays[weekday_number]}\
+          \ {time.strftime(\"%H:%M:%S\", time.gmtime(current_time))}'\n\n    return\
+          \ {\n        \"today\": formatted_date,\n    }"
+        code_language: python3
+        outputs:
+          today:
+            children: null
+            type: string
+        selected: false
+        title: 当前时间
+        type: code
+        variables: []
+      height: 51
+      id: '1760507258357'
+      position:
+        x: 329.5714285714286
+        y: 427.21428571428567
+      positionAbsolute:
+        x: 329.5714285714286
+        y: 427.21428571428567
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 241
+    - data:
+        is_team_authorization: true
+        paramSchemas:
+        - auto_generate: null
+          default: null
+          form: llm
+          human_description:
+            en_US: ''
+            ja_JP: ''
+            pt_BR: ''
+            zh_Hans: ''
+          label:
+            en_US: webpage
+            ja_JP: webpage
+            pt_BR: webpage
+            zh_Hans: webpage
+          llm_description: ''
+          max: null
+          min: null
+          name: webpage
+          options: []
+          placeholder: null
+          precision: null
+          required: true
+          scope: null
+          template: null
+          type: string
+        - auto_generate: null
+          default: null
+          form: llm
+          human_description:
+            en_US: ''
+            ja_JP: ''
+            pt_BR: ''
+            zh_Hans: ''
+          label:
+            en_US: url
+            ja_JP: url
+            pt_BR: url
+            zh_Hans: url
+          llm_description: ''
+          max: null
+          min: null
+          name: url
+          options: []
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: string
+        - auto_generate: null
+          default: null
+          form: llm
+          human_description:
+            en_US: ''
+            ja_JP: ''
+            pt_BR: ''
+            zh_Hans: ''
+          label:
+            en_US: screenshot
+            ja_JP: screenshot
+            pt_BR: screenshot
+            zh_Hans: screenshot
+          llm_description: ''
+          max: null
+          min: null
+          name: screenshot
+          options: []
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: string
+        params:
+          screenshot: ''
+          url: ''
+          webpage: ''
+        provider_id: ihi_mcp
+        provider_name: IHI_mcp
+        provider_type: mcp
+        selected: false
+        title: browser_get_struct_document_with_webpage
+        tool_configurations: {}
+        tool_description: '在已有网页内容的基础上获取该网页结构化文档内容
+
+          :param webpage: 要处理的网页内容
+
+          :param url: 网页的URL，用于辅助识别网页平台，可选
+
+          :param screenshot: 网页截图的base64编码字符串，可选
+
+          :return: 包含结构化文档内容的字典'
+        tool_label: browser_get_struct_document_with_webpage
+        tool_name: browser_get_struct_document_with_webpage
+        tool_node_version: '2'
+        tool_parameters:
+          screenshot:
+            type: mixed
+            value: null
+          url:
+            type: mixed
+            value: null
+          webpage:
+            type: mixed
+            value: null
+        type: tool
+      height: 83
+      id: '1761280174158'
+      position:
+        x: 599.2857142857141
+        y: 617.1428571428572
+      positionAbsolute:
+        x: 599.2857142857141
+        y: 617.1428571428572
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 241
+    - data:
+        output_type: array[object]
+        selected: false
+        title: 变量聚合器
+        type: variable-aggregator
+        variables:
+        - - '1761280133897'
+          - json
+        - - '1761280174158'
+          - json
+      height: 133
+      id: '1760521493700'
+      position:
+        x: 904.5714285714282
+        y: 501.5
+      positionAbsolute:
+        x: 904.5714285714282
+        y: 501.5
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 241
+    viewport:
+      x: 188.7499999999999
+      y: 34.00000000000003
+      zoom: 0.7
+  rag_pipeline_variables: []

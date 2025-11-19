@@ -1,0 +1,289 @@
+app:
+  description: 分析信息内容，提炼其主张
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: workflow
+  name: 清朗盾_主张提炼
+  use_icon_as_answer_icon: false
+dependencies:
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/siliconflow:0.0.34@1c203017d8ef49fd9152696a42e6dc71ecf272b115d8caf731c99ee0d2956dce
+    version: null
+kind: app
+version: 0.4.0
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: llm
+        targetType: code
+      id: 1758680897174-source-1758685994379-target
+      selected: false
+      source: '1758680897174'
+      sourceHandle: source
+      target: '1758685994379'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: code
+        targetType: end
+      id: 1758685994379-source-1758772458148-target
+      source: '1758685994379'
+      sourceHandle: source
+      target: '1758772458148'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: start
+        targetType: code
+      id: 1758426906176-source-1760786354339-target
+      source: '1758426906176'
+      sourceHandle: source
+      target: '1760786354339'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: code
+        targetType: llm
+      id: 1760786354339-source-1758680897174-target
+      source: '1760786354339'
+      sourceHandle: source
+      target: '1758680897174'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: 开始
+        type: start
+        variables:
+        - label: content
+          max_length: 100000
+          options: []
+          required: true
+          type: paragraph
+          variable: content
+        - default: 文本
+          hint: ''
+          label: presentation_form
+          max_length: 48
+          options: []
+          placeholder: ''
+          required: false
+          type: text-input
+          variable: presentation_form
+      height: 113
+      id: '1758426906176'
+      position:
+        x: 30
+        y: 243.5
+      positionAbsolute:
+        x: 30
+        y: 243.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 241
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        model:
+          completion_params:
+            enable_thinking: false
+            temperature: 0
+          mode: chat
+          name: Qwen/Qwen3-8B
+          provider: langgenius/siliconflow/siliconflow
+        prompt_template:
+        - id: d74a2e75-e5ce-43d3-8107-b7e4975c5bd5
+          role: system
+          text: '{{#1760786354339.systemprompt#}}'
+        - id: e7daefdb-6fbd-49c6-a88e-70b5ab4d9193
+          role: user
+          text: '{{#1758426906176.content#}}'
+        selected: false
+        structured_output:
+          schema:
+            additionalProperties: false
+            properties:
+              主张:
+                type: string
+            required:
+            - 主张
+            type: object
+        structured_output_enabled: true
+        title: 信息提炼
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 87
+      id: '1758680897174'
+      position:
+        x: 631
+        y: 243.5
+      positionAbsolute:
+        x: 631
+        y: 243.5
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 241
+    - data:
+        code: "def main(statement: str) -> dict:\n    if not statement:\n        statement\
+          \ = ''\n    statement = statement.strip()\n    return {\n        \"statement\"\
+          : statement\n    }"
+        code_language: python3
+        desc: ''
+        outputs:
+          statement:
+            children: null
+            type: string
+        selected: false
+        title: 提炼结果标准化
+        type: code
+        variables:
+        - value_selector:
+          - '1758680897174'
+          - structured_output
+          - 主张
+          value_type: object
+          variable: statement
+      height: 51
+      id: '1758685994379'
+      position:
+        x: 932
+        y: 243.5
+      positionAbsolute:
+        x: 932
+        y: 243.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 241
+    - data:
+        outputs:
+        - value_selector:
+          - '1758685994379'
+          - statement
+          value_type: string
+          variable: result
+        selected: false
+        title: 结束
+        type: end
+      height: 87
+      id: '1758772458148'
+      position:
+        x: 1233
+        y: 243.5
+      positionAbsolute:
+        x: 1233
+        y: 243.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 241
+    - data:
+        code: "\ndef main(presentation_form: str):\n    systemprompt = \"你是擅长甄别网络违法有害信息的人民警察，分析所提供的信息并总结其中心思想，将中心思想格式化为利于检查的陈述，提取可以独立验证是否违法有害的核心主张。要求：主张要涵盖所有要点，不能片面断章取义，不能包含分析内容和主观判断；仅输出主张内容，无需添加\
+          \ “该内容声称”“该内容主张” 等引导性表述，不额外补充解释或修饰。\"\n    if presentation_form == \"图文\"\
+          \ or presentation_form == \"视频\":\n        systemprompt = \"你是擅长甄别网络违法有害信息的人民警察，要对多模态描述内容进行分析，总结被描述样本的中心思想，将中心思想格式化为利于检查的陈述，提取可以独立验证是否违法有害的核心主张。要求：主张要涵盖所有要点，不能片面断章取义，不能包含分析内容和主观判断；仅输出主张内容，无需添加\
+          \ “该视频声称”“该内容主张” 等引导性表述，不额外补充解释或修饰。\"\n    return {\n        \"systemprompt\"\
+          : systemprompt,\n    }\n"
+        code_language: python3
+        outputs:
+          systemprompt:
+            children: null
+            type: string
+        selected: false
+        title: 根据呈现形式分配提示词
+        type: code
+        variables:
+        - value_selector:
+          - '1758426906176'
+          - presentation_form
+          value_type: string
+          variable: presentation_form
+      height: 51
+      id: '1760786354339'
+      position:
+        x: 331
+        y: 243.5
+      positionAbsolute:
+        x: 331
+        y: 243.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 241
+    viewport:
+      x: 41.55000000000007
+      y: 203.60000000000002
+      zoom: 0.7
+  rag_pipeline_variables: []

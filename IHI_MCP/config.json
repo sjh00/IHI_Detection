@@ -1,0 +1,104 @@
+{
+  "db": {
+    "db_path": "data/database/detection_history.db",
+    "sqlscript_path": "data/sqlscript/detection_history.sql"
+  },
+  "mcp": {
+    "host": "0.0.0.0",
+    "port": 8001,
+    "transport": "streamable-http"
+  },
+  "browser": {
+    "browser_mcp_server": {
+      "mcpServers": {
+        "chrome-devtools": {
+          "transport": "stdio",
+          "command": "npx",
+          "args": [
+            "-y",
+            "chrome-devtools-mcp@0.10.0",
+            "--acceptInsecureCerts",
+            "--categoryEmulation=false",
+            "--categoryPerformance=false",
+            "--viewport=1440x1000"
+          ]
+        }
+      }
+    },
+    "timeout": 240,
+    "platform_map": {
+      "douyin.com": "抖音",
+      "iesdouyin.com": "抖音",
+      "kuaishou.com": "快手",
+      "weibo.com": "微博",
+      "weibo.cn": "微博",
+      "xiaohongshu.com": "小红书",
+      "bilibili.com": "哔哩哔哩",
+      "toutiao.com": "今日头条",
+      "zhihu.com": "知乎",
+      "tieba.baidu.com": "百度贴吧",
+      "baijiahao.baidu.com": "百度百家号",
+      "163.com": "网易",
+      "sohu.com": "搜狐",
+      "mp.weixin.qq.com": "微信公众号",
+      "qq.com": "腾讯网",
+      "ifeng.com": "凤凰网",
+      "360kuai.com": "360快咨询",
+      "360doc.com": "360个人图书馆",
+      "wenda.so.com": "360问答",
+      "wenwen.sogou.com": "搜狗问问"
+    }
+  },
+  "history": {},
+  "ai_helper": {
+    "system_prompt": "你是擅长分析违法有害信息的人民警察，请严格按照要求进行回答。",
+    "providers": {
+      "ollama": {
+        "base_url": "http://localhost:11434",
+        "timeout": 60
+      },
+      "silicon_flow": {
+        "base_url": "https://api.siliconflow.cn/v1",
+        "timeout": 60
+      },
+      "zhipu": {
+        "base_url": "https://open.bigmodel.cn/api/paas/v4",
+        "timeout": 60
+      },
+      "newapi": {
+        "base_url": "http://192.168.88.202:3030/v1",
+        "timeout": 60
+      }
+    },
+    "models": {
+      "llm": {
+        "provider": "newapi",
+        "name": "Qwen3-235B",
+        "fallback_model": {
+          "provider": "silicon_flow",
+          "name": "Qwen/Qwen3-8B"
+        }
+      },
+      "lvm": {
+        "provider": "zhipu",
+        "name": "glm-4.1v-thinking-flash"
+      },
+      "ocr": {
+        "provider": "silicon_flow",
+        "name": "deepseek-ai/DeepSeek-OCR"
+      },
+      "speech2text": {
+        "provider": "silicon_flow",
+        "name": "TeleAI/TeleSpeechASR"
+      }
+    }
+  },
+  "session": {
+    "storage_backend": "duckdb",
+    "session_timeout": 86400,
+    "cleanup_interval": 7200,
+    "storage_path": "data/database/sessions.db",
+    "cleanup_enabled": true,
+    "cleanup_patterns": ["daily", "every 6 hours"]
+  }
+}

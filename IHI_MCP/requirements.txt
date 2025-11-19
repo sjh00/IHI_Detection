@@ -1,0 +1,8 @@
+fastmcp
+aiohttp
+requests
+duckdb
+pandas
+chardet
+schedule
+fake-useragent

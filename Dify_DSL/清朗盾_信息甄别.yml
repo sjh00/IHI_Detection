@@ -1,0 +1,653 @@
+app:
+  description: 甄别违法有害信息，按照 “三级十九类” 标准，给信息样本打标签、分级、归类。
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: workflow
+  name: 清朗盾_信息甄别
+  use_icon_as_answer_icon: false
+dependencies:
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/siliconflow:0.0.34@1c203017d8ef49fd9152696a42e6dc71ecf272b115d8caf731c99ee0d2956dce
+    version: null
+kind: app
+version: 0.4.0
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInLoop: false
+        sourceType: code
+        targetType: llm
+      id: 1758645336352-source-1758633761885-target
+      selected: false
+      source: '1758645336352'
+      sourceHandle: source
+      target: '1758633761885'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: code
+        targetType: end
+      id: 1758682811222-source-1758682902845-target
+      selected: false
+      source: '1758682811222'
+      sourceHandle: source
+      target: '1758682902845'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: llm
+        targetType: code
+      id: 1758633761885-source-1758683752520-target
+      selected: false
+      source: '1758633761885'
+      sourceHandle: source
+      target: '1758683752520'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: code
+        targetType: if-else
+      id: 1758683752520-source-1758636506241-target
+      selected: false
+      source: '1758683752520'
+      sourceHandle: source
+      target: '1758636506241'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: code
+        targetType: code
+      id: 1758494787216-source-1758645336352-target
+      source: '1758494787216'
+      sourceHandle: source
+      target: '1758645336352'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: if-else
+        targetType: end
+      id: 1758636506241-false-1758773713017-target
+      source: '1758636506241'
+      sourceHandle: 'false'
+      target: '1758773713017'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: start
+        targetType: code
+      id: 1758426906176-source-1758494787216-target
+      source: '1758426906176'
+      sourceHandle: source
+      target: '1758494787216'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: if-else
+        targetType: code
+      id: 1758636506241-49f74d39-2a6e-4193-a688-a01f978ed945-1758682811222-target
+      source: '1758636506241'
+      sourceHandle: 49f74d39-2a6e-4193-a688-a01f978ed945
+      target: '1758682811222'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: 开始
+        type: start
+        variables:
+        - label: content
+          max_length: 100000
+          options: []
+          required: true
+          type: paragraph
+          variable: content
+        - default: 文本
+          hint: ''
+          label: presentation_form
+          max_length: 8
+          options: []
+          placeholder: ''
+          required: true
+          type: text-input
+          variable: presentation_form
+        - default: '0'
+          hint: ''
+          label: is_aigc
+          max_length: 48
+          options: []
+          placeholder: ''
+          required: true
+          type: number
+          variable: is_aigc
+      height: 139
+      id: '1758426906176'
+      position:
+        x: 30
+        y: 402.5
+      positionAbsolute:
+        x: 30
+        y: 402.5
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 241
+    - data:
+        code: "import time\ndef main() -> dict:\n    # 获取当前日期时间\n    current_time\
+          \ = int(time.time() + 8 * 60 * 60)  # 东八区时间\n\n    # 获取星期几\n    weekdays\
+          \ = ['周日', '周一', '周二', '周三', '周四', '周五', '周六']\n    weekday_number = int(time.strftime('%w',\
+          \ time.gmtime(current_time)))  # 返回 0-6，对应周日到周六\n\n    # 跨平台方式：先获取数值再转为字符串（避免系统差异）\n\
+          \    year = int(time.strftime('%Y', time.gmtime(current_time)))\n    month\
+          \ = int(time.strftime('%m', time.gmtime(current_time)))  # 月份（1-12，无前导零）\n\
+          \    day = int(time.strftime('%d', time.gmtime(current_time)))      # 日期（1-31，无前导零）\n\
+          \n    # 格式化日期字符串\n    formatted_date = f'{year}年{month}月{day}日 {weekdays[weekday_number]}\
+          \ {time.strftime(\"%H:%M:%S\", time.gmtime(current_time))}'\n\n    return\
+          \ {\n        \"today\": formatted_date,\n    }"
+        code_language: python3
+        desc: ''
+        outputs:
+          today:
+            children: null
+            type: string
+        selected: false
+        title: 当前时间
+        type: code
+        variables: []
+      height: 51
+      id: '1758494787216'
+      position:
+        x: 361
+        y: 402.5
+      positionAbsolute:
+        x: 361
+        y: 402.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 241
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        model:
+          completion_params:
+            enable_thinking: false
+            temperature: 0.1
+          mode: chat
+          name: Qwen/Qwen3-8B
+          provider: langgenius/siliconflow/siliconflow
+        prompt_template:
+        - id: bf8d01b1-4ea1-454e-a54c-54c41d6ab4a0
+          role: system
+          text: '你是擅长甄别网络违法有害信息的人民警察。深入分析所提供的信息，完成以下工作：
+
+            1. 判断是否为违法有害信息，若是则继续，否则跳至第5步直接说明分析依据；
+
+            2. 评估其危害程度、传播风险，给出 “社会危害风险”（高, 中, 低, 无）；
+
+            3. 严格从 [谣言，涉政，涉稳，涉恐，涉黄，赌博，毒品，网络暴力，煽动性] 中选取适配标签标注；
+
+            4. 按照违法有害信息“三级十九类”认定标准，结合相关法律、办法，对信息归类；
+
+            5. 简要说明分析依据，200字以内。
+
+            要求：基于信息核心内容判断，不添加无关假设，表述简洁，无冗余。
+
+            当前时间：{{#1758494787216.today#}}
+
+
+            ## 三级十九类认定标准
+
+            按照内容性质、危害程度和传播风险等指标，互联网违法有害信息分为三级、十九类，其中适用删除清理措施的信息共14类（违法信息12类+有害信息2类），具体如下：
+
+            1. 反对宪法所确定的基本原则的;
+
+            2. 危害国家安全，泄露国家秘密，颠覆国家政权，破坏国家统一的;
+
+            3. 煽动、策划非法集会、游行、示威的;
+
+            4. 宣扬恐怖主义，煽动实施恐怖活动的;
+
+            5. 煽动民族仇恨、民族歧视，破坏民族团结的;
+
+            6. 违反国家有关规定向社会发布信息系统漏洞、计算机病毒，开展网络攻击、网络侵入，或为他人从事危害网络安全的活动提供技术支持、广告推广、支付结算等帮助的;
+
+            7. 损害国家荣誉和利益的;
+
+            8. 散布谣言，扰乱社会秩序，破坏社会稳定的;
+
+            9. 破坏国家宗教政策，宣扬邪教和封建迷信的;
+
+            10. 冒充公安机关或其工作人员招摇撞骗的;
+
+            11. 泄露警务工作秘密的；
+
+            12. 恶意攻击人民警察执法，干扰公安机关正常办案的；
+
+            13. 散布淫秽、色情、赌博、暴力、凶杀、恐怖或者教唆犯罪的;
+
+            14. 含有法律、行政法规禁止的其他内容的。
+
+
+            ## 参照相关法律、办法
+
+            《互联网信息服务管理办法》第十五条，互联网信息服务提供者不得制作、复制、发布、传播含有下列内容的信息： （一）反对宪法所确定的基本原则的；
+            （二）危害国家安全，泄露国家秘密，颠覆国家政权，破坏国家统一的； （三）损害国家荣誉和利益的； （四）煽动民族仇恨、民族歧视，破坏民族团结的；
+            （五）破坏国家宗教政策，宣扬邪教和封建迷信的； （六）散布谣言，扰乱社会秩序，破坏社会稳定的； （七）散布淫秽、色情、赌博、暴力、凶杀、恐怖或者教唆犯罪的；
+            （八）侮辱或者诽谤他人，侵害他人合法权益的； （九）含有法律、行政法规禁止的其他内容的。
+
+            《中华人民共和国网络安全法》第十二条，国家保护公民、法人和其他组织依法使用网络的权利，促进网络接入普及，提升网络服务水平，为社会提供安全、便利的网络服务，保障网络信息依法有序自由流动。
+            任何个人和组织使用网络应当遵守宪法法律，遵守公共秩序，尊重社会公德，不得危害网络安全，不得利用网络从事危害国家安全、荣誉和利益，煽动颠覆国家政权、推翻社会主义制度，煽动分裂国家、破坏国家统一，宣扬恐怖主义、极端主义，宣扬民族仇恨、民族歧视，传播暴力、淫秽色情信息，编造、传播虚假信息扰乱经济秩序和社会秩序，以及侵害他人名誉、隐私、知识产权和其他合法权益等活动。
+
+            《中华人民共和国网络安全法》第二十六条，开展网络安全认证、检测、风险评估等活动，向社会发布系统漏洞、计算机病毒、网络攻击、网络侵入等网络安全信息，应当遵守国家有关规定。
+
+            《中华人民共和国网络安全法》第二十七条，任何个人和组织不得从事非法侵入他人网络、干扰他人网络正常功能、窃取网络数据等危害网络安全的活动；不得提供专门用于从事侵入网络、干扰网络正常功能及防护措施、窃取网络数据等危害网络安全活动的程序、工具；明知他人从事危害网络安全的活动的，不得为其提供技术支持、广告推广、支付结算等帮助。
+
+            《中华人民共和国治安管理处罚法》第五十五条，煽动民族仇恨、民族歧视，或者在出版物、信息网络中刊载民族歧视、侮辱内容的，处十日以上十五日以下拘留，可以并处三千元以下罚款；情节较轻的，处五日以下拘留或者三千元以下罚款。
+
+            《中华人民共和国治安管理处罚法》第六十条，以殴打、侮辱、恐吓等方式实施学生欺凌，违反治安管理的，公安机关应当依照本法、《中华人民共和国预防未成年人犯罪法》的规定，给予治安管理处罚、采取相应矫治教育等措施。
+            学校违反有关法律法规规定，明知发生严重的学生欺凌或者明知发生其他侵害未成年学生的犯罪，不按规定报告或者处置的，责令改正，对其直接负责的主管人员和其他直接责任人员，建议有关部门依法予以处分。
+
+            《中华人民共和国反恐怖主义法》第二条，国家反对一切形式的恐怖主义，依法取缔恐怖活动组织，对任何组织、策划、准备实施、实施恐怖活动，宣扬恐怖主义，煽动实施恐怖活动，组织、领导、参加恐怖活动组织，为恐怖活动提供帮助的，依法追究法律责任。
+            国家不向任何恐怖活动组织和人员作出妥协，不向任何恐怖活动人员提供庇护或者给予难民地位。
+
+            '
+        - id: d0538a15-3df9-4ccb-ba2c-f84ec6ffed51
+          role: user
+          text: '{{#1758645336352.sample#}}'
+        selected: false
+        structured_output:
+          schema:
+            additionalProperties: false
+            properties:
+              分析依据:
+                type: string
+              归类:
+                enum:
+                - 反对宪法所确定的基本原则
+                - 危害国家安全，泄露国家秘密，颠覆国家政权，破坏国家统一
+                - 煽动、策划非法集会、游行、示威
+                - 宣扬恐怖主义，煽动实施恐怖活动
+                - 煽动民族仇恨、民族歧视，破坏民族团结
+                - 违反国家有关规定向社会发布信息系统漏洞、计算机病毒，开展网络攻击、网络侵入，或为他人从事危害网络安全的活动提供技术支持、广告推广、支付结算等帮助
+                - 损害国家荣誉和利益
+                - 散布谣言，扰乱社会秩序，破坏社会稳定
+                - 破坏国家宗教政策，宣扬邪教和封建迷信
+                - 冒充公安机关或其工作人员招摇撞骗
+                - 泄露警务工作秘密
+                - 恶意攻击人民警察执法，干扰公安机关正常办案
+                - 散布淫秽、色情、赌博、暴力、凶杀、恐怖或者教唆犯罪
+                - 法律、行政法规禁止的其他内容
+                type: string
+              标签:
+                items:
+                  type: string
+                type: array
+              社会危害风险:
+                enum:
+                - 高
+                - 中
+                - 低
+                - 无
+                type: string
+            required:
+            - 社会危害风险
+            - 标签
+            - 归类
+            - 分析依据
+            type: object
+        structured_output_enabled: true
+        title: 识别打标和分级归类
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 87
+      id: '1758633761885'
+      position:
+        x: 361
+        y: 554.1921307506053
+      positionAbsolute:
+        x: 361
+        y: 554.1921307506053
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 241
+    - data:
+        code: "\ndef main(content: str, presentation_form: str, is_aigc: float) ->\
+          \ dict:\n    lf = '\\n'\n    metadata = f'{(lf+\"呈现形式：\" + presentation_form)\
+          \ if presentation_form else \"\"}{lf+\"疑似AI生成\" if is_aigc else \"\"}'\n\
+          \    res = f'''## 待分析信息\n{content}{(lf+lf+\"## 信息元数据\" + metadata) if metadata\
+          \ else \"\"}'''\n    return {\n        \"sample\": res\n    }"
+        code_language: python3
+        desc: ''
+        outputs:
+          sample:
+            children: null
+            type: string
+        selected: false
+        title: 识别打标和分级归类样本
+        type: code
+        variables:
+        - value_selector:
+          - '1758426906176'
+          - content
+          value_type: string
+          variable: content
+        - value_selector:
+          - '1758426906176'
+          - presentation_form
+          value_type: string
+          variable: presentation_form
+        - value_selector:
+          - '1758426906176'
+          - is_aigc
+          value_type: number
+          variable: is_aigc
+      height: 51
+      id: '1758645336352'
+      position:
+        x: 361
+        y: 480.1099273607749
+      positionAbsolute:
+        x: 361
+        y: 480.1099273607749
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 241
+    - data:
+        cases:
+        - case_id: 49f74d39-2a6e-4193-a688-a01f978ed945
+          conditions:
+          - comparison_operator: is
+            id: 2580605e-e24a-439d-9f85-63ab8933767b
+            value: 无
+            varType: string
+            variable_selector:
+            - '1758683752520'
+            - harmlevel
+          - comparison_operator: is
+            id: 6d76ff1b-d1fc-4c0d-936e-461b1ded2a8e
+            value: 低
+            varType: string
+            variable_selector:
+            - '1758683752520'
+            - harmlevel
+          id: 49f74d39-2a6e-4193-a688-a01f978ed945
+          logical_operator: or
+        desc: ''
+        selected: false
+        title: 分级和归类分支
+        type: if-else
+      height: 149
+      id: '1758636506241'
+      position:
+        x: 653.7467917675542
+        y: 480.1099273607749
+      positionAbsolute:
+        x: 653.7467917675542
+        y: 480.1099273607749
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 241
+    - data:
+        code: "\ndef main(reasoning: str, harmlevel: str) -> dict:\n    jielun = '不是违法有害信息'\n\
+          \    if harmlevel == '无':\n        jielun = '不是负面信息'\n    return {\n   \
+          \     \"result\": {\n            \"结论\": jielun,\n            \"分析依据\":reasoning,\n\
+          \            \"harmlevel\": harmlevel,\n            \"disposal_status\"\
+          : 0\n        }\n    }\n"
+        code_language: python3
+        desc: ''
+        outputs:
+          result:
+            children: null
+            type: object
+        selected: false
+        title: 返回低风险结果
+        type: code
+        variables:
+        - value_selector:
+          - '1758683752520'
+          - reasoning
+          value_type: string
+          variable: reasoning
+        - value_selector:
+          - '1758683752520'
+          - harmlevel
+          value_type: string
+          variable: harmlevel
+      height: 51
+      id: '1758682811222'
+      position:
+        x: 956.9619854721548
+        y: 402.5
+      positionAbsolute:
+        x: 956.9619854721548
+        y: 402.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 241
+    - data:
+        desc: ''
+        outputs:
+        - value_selector:
+          - '1758682811222'
+          - result
+          value_type: object
+          variable: result
+        selected: false
+        title: 低风险-结束-低风险结果
+        type: end
+      height: 87
+      id: '1758682902845'
+      position:
+        x: 956.9619854721548
+        y: 480.1099273607749
+      positionAbsolute:
+        x: 956.9619854721548
+        y: 480.1099273607749
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 241
+    - data:
+        code: "\ndef main(harmlevel: str, labels: str, classification: str, reasoning:\
+          \ str) -> dict:\n    g_c_map = {\n        \"反对宪法所确定的基本原则\": \"一级\",\n  \
+          \      \"危害国家安全，泄露国家秘密，颠覆国家政权，破坏国家统一\": \"一级\",\n        \"煽动、策划非法集会、游行、示威\"\
+          : \"一级\",\n        \"宣扬恐怖主义，煽动实施恐怖活动\": \"一级\",\n        \"煽动民族仇恨、民族歧视，破坏民族团结\"\
+          : \"一级\",\n        \"违反国家有关规定向社会发布信息系统漏洞、计算机病毒，开展网络攻击、网络侵入，或为他人从事危害网络安全的活动提供技术支持、广告推广、支付结算等帮助\"\
+          : \"一级\",\n        \"损害国家荣誉和利益\": \"二级\",\n        \"散布谣言，扰乱社会秩序，破坏社会稳定\"\
+          : \"二级\",\n        \"破坏国家宗教政策，宣扬邪教和封建迷信\": \"二级\",\n        \"冒充公安机关或其工作人员招摇撞骗\"\
+          : \"二级\",\n        \"泄露警务工作秘密\": \"二级\",\n        \"恶意攻击人民警察执法，干扰公安机关正常办案\"\
+          : \"二级\",\n        \"散布淫秽、色情、赌博、暴力、凶杀、恐怖或者教唆犯罪\": \"三级\",\n        \"含有法律、行政法规禁止的其他内容\"\
+          : \"三级\",\n    }\n    grading = g_c_map.get(classification, \"\")\n    return\
+          \ {\n        \"harmlevel\": harmlevel,\n        \"labels\": ','.join(labels),\n\
+          \        \"grading\": grading,\n        \"classification\": classification,\n\
+          \        \"reasoning\": reasoning\n    }"
+        code_language: python3
+        desc: ''
+        outputs:
+          classification:
+            children: null
+            type: string
+          grading:
+            children: null
+            type: string
+          harmlevel:
+            children: null
+            type: string
+          labels:
+            children: null
+            type: string
+          reasoning:
+            children: null
+            type: string
+        selected: false
+        title: 识别打标和分级归类结果标准化
+        type: code
+        variables:
+        - value_selector:
+          - '1758633761885'
+          - structured_output
+          - 社会危害风险
+          value_type: object
+          variable: harmlevel
+        - value_selector:
+          - '1758633761885'
+          - structured_output
+          - 标签
+          value_type: object
+          variable: labels
+        - value_selector:
+          - '1758633761885'
+          - structured_output
+          - 归类
+          value_type: object
+          variable: classification
+        - value_selector:
+          - '1758633761885'
+          - structured_output
+          - 分析依据
+          value_type: object
+          variable: reasoning
+      height: 51
+      id: '1758683752520'
+      position:
+        x: 653.7467917675542
+        y: 402.5
+      positionAbsolute:
+        x: 653.7467917675542
+        y: 402.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 241
+    - data:
+        outputs:
+        - value_selector:
+          - '1758683752520'
+          - harmlevel
+          value_type: string
+          variable: harmlevel
+        - value_selector:
+          - '1758683752520'
+          - labels
+          value_type: string
+          variable: labels
+        - value_selector:
+          - '1758683752520'
+          - grading
+          value_type: string
+          variable: grading
+        - value_selector:
+          - '1758683752520'
+          - classification
+          value_type: string
+          variable: classification
+        - value_selector:
+          - '1758683752520'
+          - reasoning
+          value_type: string
+          variable: reasoning
+        selected: false
+        title: 中高风险结果
+        type: end
+      height: 191
+      id: '1758773713017'
+      position:
+        x: 956.9619854721548
+        y: 583.9273002421307
+      positionAbsolute:
+        x: 956.9619854721548
+        y: 583.9273002421307
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 241
+    viewport:
+      x: 91.83294808017001
+      y: -28.354318642984822
+      zoom: 0.7480788869202175
+  rag_pipeline_variables: []
