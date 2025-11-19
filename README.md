@@ -40,6 +40,7 @@ IHI_Detection/
 ├── Dify_DSL/           # Dify工作流文件
 ├── IHI_MCP/            # 主MCP服务器
 │   ├── data/           # 数据存储目录
+│   ├── thirdparty/     # 第三方组件目录
 │   ├── mcp_tools/      # MCP工具模块
 │   ├── src/            # 核心功能实现
 │   ├── config.json     # 项目配置文件
@@ -69,6 +70,8 @@ pip install -r requirements.txt
 2. 配置认证文件 `IHI_MCP/auth.json`
    - 配置AI模型的认证信息
 3. 确保所有敏感信息已正确配置
+4. 下载第三方组件
+   - 下载[ffmpeg](https://ffmpeg.org/)的bin中完整可执行文件到IHI_MCP/thirdparty/ffmpeg目录
 
 ## 使用
 
